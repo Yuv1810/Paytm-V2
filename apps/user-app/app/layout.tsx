@@ -19,7 +19,9 @@ export default function RootLayout({
 
     <SessionWrapper>
       <html>
-         <body>{children}</body>
+      <body style={{ background: "#ebe6e6" }}>
+          {children}
+          </body>
          </html>
     </SessionWrapper>
   );

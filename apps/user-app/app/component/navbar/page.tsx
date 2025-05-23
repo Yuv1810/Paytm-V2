@@ -32,9 +32,9 @@ export default function Navbar({ session }: { session: any }) {
 
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md fixed w-screen ">
       <div className="max-w-7xl mx-auto px-4 py-3 h-16 flex justify-between items-center">
-      <div className="text-xl font-bold text-blue-600 ml-4 px-2 py-1 rounded w-24 h-full flex justify-center items-center">
+      <div className="text-xl font-bold text-blue-600">
     MyApp
 </div>
 
