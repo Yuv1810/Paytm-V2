@@ -18,8 +18,8 @@ export default function RootLayout({
   return (
 
     <SessionWrapper>
-      <html>
-      <body style={{ background: "#ebe6e6" }}>
+    <html lang="en" className={geist.className}>
+    <body style={{ background: "#ebe6e6" }} className="vsc-initialized">
           {children}
           </body>
          </html>

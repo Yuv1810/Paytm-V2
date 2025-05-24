@@ -1070,12 +1070,10 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     OnRampTransaction: number
-    Balance: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     OnRampTransaction?: boolean | UserCountOutputTypeCountOnRampTransactionArgs
-    Balance?: boolean | UserCountOutputTypeCountBalanceArgs
   }
 
   // Custom InputTypes
@@ -1094,13 +1092,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountOnRampTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OnRampTransactionWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountBalanceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BalanceWhereInput
   }
 
 
@@ -1123,13 +1114,11 @@ export namespace Prisma {
   export type UserAvgAggregateOutputType = {
     id: number | null
     age: number | null
-    number: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
     age: number | null
-    number: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1137,7 +1126,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     age: number | null
-    number: number | null
+    number: string | null
     password: string | null
   }
 
@@ -1146,7 +1135,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     age: number | null
-    number: number | null
+    number: string | null
     password: string | null
   }
 
@@ -1164,13 +1153,11 @@ export namespace Prisma {
   export type UserAvgAggregateInputType = {
     id?: true
     age?: true
-    number?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
     age?: true
-    number?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1292,7 +1279,7 @@ export namespace Prisma {
     email: string
     name: string | null
     age: number | null
-    number: number
+    number: string
     password: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1322,8 +1309,8 @@ export namespace Prisma {
     age?: boolean
     number?: boolean
     password?: boolean
-    OnRampTransaction?: boolean | User$OnRampTransactionArgs<ExtArgs>
     Balance?: boolean | User$BalanceArgs<ExtArgs>
+    OnRampTransaction?: boolean | User$OnRampTransactionArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1356,8 +1343,8 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "age" | "number" | "password", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    OnRampTransaction?: boolean | User$OnRampTransactionArgs<ExtArgs>
     Balance?: boolean | User$BalanceArgs<ExtArgs>
+    OnRampTransaction?: boolean | User$OnRampTransactionArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1366,15 +1353,15 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      Balance: Prisma.$BalancePayload<ExtArgs> | null
       OnRampTransaction: Prisma.$OnRampTransactionPayload<ExtArgs>[]
-      Balance: Prisma.$BalancePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       email: string
       name: string | null
       age: number | null
-      number: number
+      number: string
       password: string
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1770,8 +1757,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    Balance<T extends User$BalanceArgs<ExtArgs> = {}>(args?: Subset<T, User$BalanceArgs<ExtArgs>>): Prisma__BalanceClient<$Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     OnRampTransaction<T extends User$OnRampTransactionArgs<ExtArgs> = {}>(args?: Subset<T, User$OnRampTransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OnRampTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Balance<T extends User$BalanceArgs<ExtArgs> = {}>(args?: Subset<T, User$BalanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1805,7 +1792,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly age: FieldRef<"User", 'Int'>
-    readonly number: FieldRef<"User", 'Int'>
+    readonly number: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
   }
     
@@ -2195,6 +2182,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.Balance
+   */
+  export type User$BalanceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Balance
+     */
+    select?: BalanceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Balance
+     */
+    omit?: BalanceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BalanceInclude<ExtArgs> | null
+    where?: BalanceWhereInput
+  }
+
+  /**
    * User.OnRampTransaction
    */
   export type User$OnRampTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2216,30 +2222,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OnRampTransactionScalarFieldEnum | OnRampTransactionScalarFieldEnum[]
-  }
-
-  /**
-   * User.Balance
-   */
-  export type User$BalanceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Balance
-     */
-    select?: BalanceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Balance
-     */
-    omit?: BalanceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BalanceInclude<ExtArgs> | null
-    where?: BalanceWhereInput
-    orderBy?: BalanceOrderByWithRelationInput | BalanceOrderByWithRelationInput[]
-    cursor?: BalanceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BalanceScalarFieldEnum | BalanceScalarFieldEnum[]
   }
 
   /**
@@ -4637,10 +4619,10 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
-    number?: IntFilter<"User"> | number
+    number?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    Balance?: XOR<BalanceNullableScalarRelationFilter, BalanceWhereInput> | null
     OnRampTransaction?: OnRampTransactionListRelationFilter
-    Balance?: BalanceListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4650,22 +4632,22 @@ export namespace Prisma {
     age?: SortOrderInput | SortOrder
     number?: SortOrder
     password?: SortOrder
+    Balance?: BalanceOrderByWithRelationInput
     OnRampTransaction?: OnRampTransactionOrderByRelationAggregateInput
-    Balance?: BalanceOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
-    number?: number
+    number?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     age?: IntNullableFilter<"User"> | number | null
     password?: StringFilter<"User"> | string
+    Balance?: XOR<BalanceNullableScalarRelationFilter, BalanceWhereInput> | null
     OnRampTransaction?: OnRampTransactionListRelationFilter
-    Balance?: BalanceListRelationFilter
   }, "id" | "email" | "number">
 
   export type UserOrderByWithAggregationInput = {
@@ -4690,7 +4672,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     age?: IntNullableWithAggregatesFilter<"User"> | number | null
-    number?: IntWithAggregatesFilter<"User"> | number
+    number?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
   }
 
@@ -4817,10 +4799,10 @@ export namespace Prisma {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
+    Balance?: BalanceCreateNestedOneWithoutUserInput
     OnRampTransaction?: OnRampTransactionCreateNestedManyWithoutUserInput
-    Balance?: BalanceCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4828,20 +4810,20 @@ export namespace Prisma {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
+    Balance?: BalanceUncheckedCreateNestedOneWithoutUserInput
     OnRampTransaction?: OnRampTransactionUncheckedCreateNestedManyWithoutUserInput
-    Balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    Balance?: BalanceUpdateOneWithoutUserNestedInput
     OnRampTransaction?: OnRampTransactionUpdateManyWithoutUserNestedInput
-    Balance?: BalanceUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4849,10 +4831,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    Balance?: BalanceUncheckedUpdateOneWithoutUserNestedInput
     OnRampTransaction?: OnRampTransactionUncheckedUpdateManyWithoutUserNestedInput
-    Balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4860,7 +4842,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
   }
 
@@ -4868,7 +4850,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4877,7 +4859,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5044,16 +5026,15 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type BalanceNullableScalarRelationFilter = {
+    is?: BalanceWhereInput | null
+    isNot?: BalanceWhereInput | null
+  }
+
   export type OnRampTransactionListRelationFilter = {
     every?: OnRampTransactionWhereInput
     some?: OnRampTransactionWhereInput
     none?: OnRampTransactionWhereInput
-  }
-
-  export type BalanceListRelationFilter = {
-    every?: BalanceWhereInput
-    some?: BalanceWhereInput
-    none?: BalanceWhereInput
   }
 
   export type SortOrderInput = {
@@ -5062,10 +5043,6 @@ export namespace Prisma {
   }
 
   export type OnRampTransactionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type BalanceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5081,7 +5058,6 @@ export namespace Prisma {
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
     age?: SortOrder
-    number?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -5105,7 +5081,6 @@ export namespace Prisma {
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
     age?: SortOrder
-    number?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5300,6 +5275,12 @@ export namespace Prisma {
     locked?: SortOrder
   }
 
+  export type BalanceCreateNestedOneWithoutUserInput = {
+    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput
+    connect?: BalanceWhereUniqueInput
+  }
+
   export type OnRampTransactionCreateNestedManyWithoutUserInput = {
     create?: XOR<OnRampTransactionCreateWithoutUserInput, OnRampTransactionUncheckedCreateWithoutUserInput> | OnRampTransactionCreateWithoutUserInput[] | OnRampTransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OnRampTransactionCreateOrConnectWithoutUserInput | OnRampTransactionCreateOrConnectWithoutUserInput[]
@@ -5307,11 +5288,10 @@ export namespace Prisma {
     connect?: OnRampTransactionWhereUniqueInput | OnRampTransactionWhereUniqueInput[]
   }
 
-  export type BalanceCreateNestedManyWithoutUserInput = {
-    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput> | BalanceCreateWithoutUserInput[] | BalanceUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput | BalanceCreateOrConnectWithoutUserInput[]
-    createMany?: BalanceCreateManyUserInputEnvelope
-    connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
+  export type BalanceUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput
+    connect?: BalanceWhereUniqueInput
   }
 
   export type OnRampTransactionUncheckedCreateNestedManyWithoutUserInput = {
@@ -5319,13 +5299,6 @@ export namespace Prisma {
     connectOrCreate?: OnRampTransactionCreateOrConnectWithoutUserInput | OnRampTransactionCreateOrConnectWithoutUserInput[]
     createMany?: OnRampTransactionCreateManyUserInputEnvelope
     connect?: OnRampTransactionWhereUniqueInput | OnRampTransactionWhereUniqueInput[]
-  }
-
-  export type BalanceUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput> | BalanceCreateWithoutUserInput[] | BalanceUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput | BalanceCreateOrConnectWithoutUserInput[]
-    createMany?: BalanceCreateManyUserInputEnvelope
-    connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5344,12 +5317,14 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type BalanceUpdateOneWithoutUserNestedInput = {
+    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput
+    upsert?: BalanceUpsertWithoutUserInput
+    disconnect?: BalanceWhereInput | boolean
+    delete?: BalanceWhereInput | boolean
+    connect?: BalanceWhereUniqueInput
+    update?: XOR<XOR<BalanceUpdateToOneWithWhereWithoutUserInput, BalanceUpdateWithoutUserInput>, BalanceUncheckedUpdateWithoutUserInput>
   }
 
   export type OnRampTransactionUpdateManyWithoutUserNestedInput = {
@@ -5366,18 +5341,22 @@ export namespace Prisma {
     deleteMany?: OnRampTransactionScalarWhereInput | OnRampTransactionScalarWhereInput[]
   }
 
-  export type BalanceUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput> | BalanceCreateWithoutUserInput[] | BalanceUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput | BalanceCreateOrConnectWithoutUserInput[]
-    upsert?: BalanceUpsertWithWhereUniqueWithoutUserInput | BalanceUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BalanceCreateManyUserInputEnvelope
-    set?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    disconnect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    delete?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    update?: BalanceUpdateWithWhereUniqueWithoutUserInput | BalanceUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BalanceUpdateManyWithWhereWithoutUserInput | BalanceUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BalanceUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput
+    upsert?: BalanceUpsertWithoutUserInput
+    disconnect?: BalanceWhereInput | boolean
+    delete?: BalanceWhereInput | boolean
+    connect?: BalanceWhereUniqueInput
+    update?: XOR<XOR<BalanceUpdateToOneWithWhereWithoutUserInput, BalanceUpdateWithoutUserInput>, BalanceUncheckedUpdateWithoutUserInput>
   }
 
   export type OnRampTransactionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -5392,20 +5371,6 @@ export namespace Prisma {
     update?: OnRampTransactionUpdateWithWhereUniqueWithoutUserInput | OnRampTransactionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: OnRampTransactionUpdateManyWithWhereWithoutUserInput | OnRampTransactionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: OnRampTransactionScalarWhereInput | OnRampTransactionScalarWhereInput[]
-  }
-
-  export type BalanceUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput> | BalanceCreateWithoutUserInput[] | BalanceUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BalanceCreateOrConnectWithoutUserInput | BalanceCreateOrConnectWithoutUserInput[]
-    upsert?: BalanceUpsertWithWhereUniqueWithoutUserInput | BalanceUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BalanceCreateManyUserInputEnvelope
-    set?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    disconnect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    delete?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
-    update?: BalanceUpdateWithWhereUniqueWithoutUserInput | BalanceUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BalanceUpdateManyWithWhereWithoutUserInput | BalanceUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutOnRampTransactionInput = {
@@ -5624,6 +5589,22 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BalanceCreateWithoutUserInput = {
+    amount: number
+    locked: number
+  }
+
+  export type BalanceUncheckedCreateWithoutUserInput = {
+    id?: number
+    amount: number
+    locked: number
+  }
+
+  export type BalanceCreateOrConnectWithoutUserInput = {
+    where: BalanceWhereUniqueInput
+    create: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+  }
+
   export type OnRampTransactionCreateWithoutUserInput = {
     status: $Enums.OnRampStatus
     token: string
@@ -5651,25 +5632,26 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type BalanceCreateWithoutUserInput = {
-    amount: number
-    locked: number
-  }
-
-  export type BalanceUncheckedCreateWithoutUserInput = {
-    id?: number
-    amount: number
-    locked: number
-  }
-
-  export type BalanceCreateOrConnectWithoutUserInput = {
-    where: BalanceWhereUniqueInput
+  export type BalanceUpsertWithoutUserInput = {
+    update: XOR<BalanceUpdateWithoutUserInput, BalanceUncheckedUpdateWithoutUserInput>
     create: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
+    where?: BalanceWhereInput
   }
 
-  export type BalanceCreateManyUserInputEnvelope = {
-    data: BalanceCreateManyUserInput | BalanceCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type BalanceUpdateToOneWithWhereWithoutUserInput = {
+    where?: BalanceWhereInput
+    data: XOR<BalanceUpdateWithoutUserInput, BalanceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BalanceUpdateWithoutUserInput = {
+    amount?: IntFieldUpdateOperationsInput | number
+    locked?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type BalanceUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    amount?: IntFieldUpdateOperationsInput | number
+    locked?: IntFieldUpdateOperationsInput | number
   }
 
   export type OnRampTransactionUpsertWithWhereUniqueWithoutUserInput = {
@@ -5701,39 +5683,13 @@ export namespace Prisma {
     userId?: IntFilter<"OnRampTransaction"> | number
   }
 
-  export type BalanceUpsertWithWhereUniqueWithoutUserInput = {
-    where: BalanceWhereUniqueInput
-    update: XOR<BalanceUpdateWithoutUserInput, BalanceUncheckedUpdateWithoutUserInput>
-    create: XOR<BalanceCreateWithoutUserInput, BalanceUncheckedCreateWithoutUserInput>
-  }
-
-  export type BalanceUpdateWithWhereUniqueWithoutUserInput = {
-    where: BalanceWhereUniqueInput
-    data: XOR<BalanceUpdateWithoutUserInput, BalanceUncheckedUpdateWithoutUserInput>
-  }
-
-  export type BalanceUpdateManyWithWhereWithoutUserInput = {
-    where: BalanceScalarWhereInput
-    data: XOR<BalanceUpdateManyMutationInput, BalanceUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type BalanceScalarWhereInput = {
-    AND?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
-    OR?: BalanceScalarWhereInput[]
-    NOT?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
-    id?: IntFilter<"Balance"> | number
-    userId?: IntFilter<"Balance"> | number
-    amount?: IntFilter<"Balance"> | number
-    locked?: IntFilter<"Balance"> | number
-  }
-
   export type UserCreateWithoutOnRampTransactionInput = {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
-    Balance?: BalanceCreateNestedManyWithoutUserInput
+    Balance?: BalanceCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOnRampTransactionInput = {
@@ -5741,9 +5697,9 @@ export namespace Prisma {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
-    Balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
+    Balance?: BalanceUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOnRampTransactionInput = {
@@ -5766,9 +5722,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Balance?: BalanceUpdateManyWithoutUserNestedInput
+    Balance?: BalanceUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOnRampTransactionInput = {
@@ -5776,16 +5732,16 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
+    Balance?: BalanceUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBalanceInput = {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
     OnRampTransaction?: OnRampTransactionCreateNestedManyWithoutUserInput
   }
@@ -5795,7 +5751,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     age?: number | null
-    number: number
+    number: string
     password: string
     OnRampTransaction?: OnRampTransactionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -5820,7 +5776,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     OnRampTransaction?: OnRampTransactionUpdateManyWithoutUserNestedInput
   }
@@ -5830,7 +5786,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
-    number?: IntFieldUpdateOperationsInput | number
+    number?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     OnRampTransaction?: OnRampTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -5842,12 +5798,6 @@ export namespace Prisma {
     provider: string
     amount: number
     startTime: Date | string
-  }
-
-  export type BalanceCreateManyUserInput = {
-    id?: number
-    amount: number
-    locked: number
   }
 
   export type OnRampTransactionUpdateWithoutUserInput = {
@@ -5874,23 +5824,6 @@ export namespace Prisma {
     provider?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BalanceUpdateWithoutUserInput = {
-    amount?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BalanceUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    amount?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type BalanceUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    amount?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
   }
 
 

@@ -12,11 +12,15 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 import Link from "next/link";
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
+
 
 
 
 export default function Navbar({ session }: { session: any }) {
 
+  const router = useRouter();
     // const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   // const [isLoggedIn,setIsLoggedIn] = useState(true);
@@ -55,7 +59,11 @@ export default function Navbar({ session }: { session: any }) {
            <button className="w-full bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600" onClick={() => signOut()}>Sign out</button>
           ) : (
             // <Link href="/signin">
-              <button className="w-full bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in</button>
+            <>
+            <button className="w-40 h-12 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in </button>
+             <button className="w-40 h-12 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
+             </>
+              
 
             // </Link>
           )}
@@ -100,7 +108,10 @@ export default function Navbar({ session }: { session: any }) {
               <button className="w-full bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600" onClick={() => signOut()}>Sign out</button>
           ) : (
             // <Link href="/signin">
+            <>
               <button className="w-full bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in</button>
+              <button className="w-full bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
+              </>
               
             // </Link>
           )}
