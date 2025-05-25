@@ -17,6 +17,7 @@ app.post("/bankCall",async (req, res) => {
   };
 
   try {
+
     await prisma.$transaction([
       prisma.balance.update({
         where: {
@@ -31,6 +32,7 @@ app.post("/bankCall",async (req, res) => {
       prisma.onRampTransaction.update({
         where: {
           token: paymentInformation.token,
+          status:"PENDING"
         },
         data: {
           status: "SUCCESS",

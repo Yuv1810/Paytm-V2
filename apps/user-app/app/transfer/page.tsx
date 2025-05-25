@@ -1,19 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckSession from "../component/CheckSession";
 import { useForm } from "react-hook-form";
+import { AddMoney, getBalances, getTrx } from "../action";
+import BalanceCard from "../component/balanceCard/balanceCard";
+
 
 export default function Transfer(){
     const [formData,setFormData]=useState({
         amount:0,
         Bank:""
     });
+    const [transactions,setTransaction]=useState<Array<any>>([]);
+    const [balance,setBalance]=useState<any>(null);
 
-    const transactions = [
-        { id: 1, amount: 2000, type: "Deposit", date: "2025-05-22" },
-        { id: 2, amount: 1500, type: "Withdrawal", date: "2025-05-21" },
-        { id: 3, amount: 3000, type: "Transfer", date: "2025-05-20" },
-      ];
+   async function fetchData(){
+    const res=await getTrx();
+    const bal= await getBalances();
+    console.log(bal);
+    setBalance(bal);    
+    setTransaction(res);
+    return res;
+   } 
+
+    
+
+    useEffect(()=>{
+      fetchData();
+    },[]);
+
 
     const totalbanks:string[]=["HDFC","AXIS","ICICI"]
     
@@ -24,9 +39,18 @@ export default function Transfer(){
         })
     }
 
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:");
+        try{
+          if(formData.Bank=="" || formData.amount==0){
+            throw "Empty data";
+          }
+      const res= await AddMoney(formData.Bank,formData.amount);
+        window.location.reload();
+      }catch(err){
+        console.log(err);
+      }
+
       };
 
 
@@ -52,21 +76,7 @@ export default function Transfer(){
   </form>
 
   {/* Right: Balance */}
-  <div className="w-full h-72 flex flex-col space-y-6 bg-white p-4 max-w-md items-center rounded-md mt-10 md:mt-0 md:ml-4 shadow-lg border border-gray-600">
-    <h1 className="text-2xl font-bold text-black">Balance</h1>
-    <div className="w-full flex justify-between px-4 border-t border-b border-gray-600 py-2 text-black">
-      <span className="text-lg">Unlocked Balance:</span>
-      <span className="font-semibold">₹10,000</span>
-    </div>
-    <div className="w-full flex justify-between px-4 border-b border-gray-600 py-2 text-black">
-      <span className="text-lg">Locked Balance:</span>
-      <span className="font-semibold">₹2,000</span>
-    </div>
-    <div className="w-full flex justify-between px-4 border-t border-gray-600 pt-4 text-black">
-      <span className="text-lg font-bold">Total Balance:</span>
-      <span className="text-lg font-bold">₹12,000</span>
-    </div>
-  </div>
+  <BalanceCard balance={balance || undefined} />
 
 </div>
 
@@ -80,18 +90,34 @@ export default function Transfer(){
         <h1 className="text-2xl font-bold mb-6 text-black">Transanction</h1>
 
                         
-                {transactions.map((tx) => (
-            <div
-            key={tx.id}
-            className="w-full flex justify-between items-center text-black"
-            >
-            <div className="flex flex-col">
-                <span className="font-semibold">{tx.type}</span>
-                <span className="text-sm text-gray-600">{tx.date}</span>
-            </div>
-            <div className="text-right font-bold">₹{tx.amount}</div>
-            </div>
-        ))}
+        {transactions.length > 0 ? (
+  transactions.map((tx) => (
+    <div
+      key={tx.id}
+      className="w-full flex justify-between items-center text-black"
+    >
+      <div className="flex flex-col">
+        <span className="font-semibold">{tx.status}</span>
+        <span className="text-sm text-gray-600">
+          {tx.startTime.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })}
+        </span>
+      </div>
+      <div className="text-right font-bold">₹{tx.amount}</div>
+    </div>
+  ))
+) : (
+  <div className="w-full text-center text-gray-500 py-4">
+    No Recent Transactions
+  </div>
+)}
+
                 
 
 

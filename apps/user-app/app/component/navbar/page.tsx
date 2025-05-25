@@ -10,10 +10,11 @@ Sign out
 
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect, useState } from "react"
-import { Menu, X } from "lucide-react"
+import { Home, List, Menu, Send, X ,Repeat} from "lucide-react"
 import Link from "next/link";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
+import { Share } from "next/font/google";
 
 
 
@@ -45,15 +46,24 @@ export default function Navbar({ session }: { session: any }) {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/">
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer">Home</span>
-          </Link>
-          <Link href="/transfer">
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer">Transfer</span>
-          </Link>
-          <Link href="/transaction">
-            <span className="text-gray-700 hover:text-blue-600 cursor-pointer">Transaction</span>
-          </Link>
+        <Link href="/" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+        <Home size={18} />
+        <span>Home</span>
+      </Link>
+
+      <Link href="/transfer" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+        <Send size={18} />
+        <span>Transfer</span>
+      </Link>
+
+      <Link href="/transaction" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+        <List size={18} />
+        <span>Transaction</span>
+      </Link>
+      <Link href="/p2p" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
+      <Repeat size={18} />
+      <span>P2P</span>
+     </Link>
 
           {session ? (
            <button className="w-full bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600" onClick={() => signOut()}>Sign out</button>
@@ -94,15 +104,25 @@ export default function Navbar({ session }: { session: any }) {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3 border-t border-gray-200">
-          <Link href="/">
-            <span className="block text-gray-700 hover:text-blue-600 cursor-pointer">Home</span>
-          </Link>
-          <Link href="/transfer">
-            <span className="block text-gray-700 hover:text-blue-600 cursor-pointer">Transfer</span>
-          </Link>
-          <Link href="/transaction">
-            <span className="block text-gray-700 hover:text-blue-600 cursor-pointer">Transaction</span>
-          </Link>
+          <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+        <Home size={18} />
+        <span>Home</span>
+      </Link>
+
+      <Link href="/transfer" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+        <Send size={18} />
+        <span>Transfer</span>
+      </Link>
+
+      <Link href="/transaction" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+        <List size={18} />
+        <span>Transaction</span>
+      </Link>
+
+      <Link href="/p2p" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+        <Repeat size={18} />
+        <span>Peer 2 Peer</span>
+      </Link>
 
           {session ? (          
               <button className="w-full bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600" onClick={() => signOut()}>Sign out</button>
