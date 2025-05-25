@@ -10,6 +10,7 @@ export default async function RootLayout({children}:{children:ReactNode}){
         <Navbar session={session}/>
         <div className="pt-16">
         {children}
+        
         </div>
         </>
     )

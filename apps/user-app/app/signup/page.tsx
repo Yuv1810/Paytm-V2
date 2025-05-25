@@ -58,7 +58,7 @@ const SignupPage = () => {
 
 
     // After successful signup (you will replace with API call)
-    router.push("/main");
+    router.push("/");
   };
 
   return (

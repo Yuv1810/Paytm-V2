@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Navbar from "./component/navbar/page";
 
 import { authOptions, getSessionServer } from "./api/lib/auth";
+import { link } from "fs";
 
 
 
@@ -35,43 +36,51 @@ export default async function Home() {
       {/* Hero */}
       <section className="bg-blue-50 flex flex-col md:flex-row items-center justify-between p-6 p-20 md:p-16">
         <div className="max-w-xl">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Recharge & Pay Bills in Seconds</h2>
-          <p className="text-gray-600 mb-6">Fast, secure, and trusted by millions. Mobile, DTH, electricity & more.</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">Recharge Wallet & Pay to Peer in Seconds</h2>
+          <p className="text-gray-600 mb-6">Fast and secure.</p>
           <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700">
             Get Started
           </button>
-        </div>
-        <div className="mt-8 md:mt-0">
-          <Image src="/hero-phone.png" alt="Paytm App" width={400} height={400} />
         </div>
       </section>
 
       {/* Quick Links */}
       <section className="p-6 md:p-12 bg-white grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {[
-          { label: "Recharge", img: "/recharge.png" },
-          { label: "Electricity", img: "/electricity.png" },
-          { label: "DTH", img: "/dth.png" },
-          { label: "Credit Card", img: "/creditcard.png" },
+          { label: "Transfer", img: "/left-right-arrows_10118069.png" , link:"/transfer"},
+          { label: "Transaction", img: "/transaction_17611630.png" ,link:"/transaction"},
+          { label: "Architecture", img: "/house_17822724.png" ,link:"/architecture"},
+          { label: "P2P", img: "/relations_6209922.png" ,link:"/p2p"},
         ].map((item) => (
           <div key={item.label} className="flex flex-col items-center space-y-2">
+            <a href={item.link}>
             <Image src={item.img} alt={item.label} width={60} height={60} />
             <span className="text-sm font-medium">{item.label}</span>
+            </a>
+            
           </div>
         ))}
       </section>
 
       {/* Download App */}
-      <section className="p-6 md:p-12 bg-gray-100 flex flex-col md:flex-row justify-between items-center">
+      <section className="p-6 md:p-16 bg-gray-100 flex flex-col md:flex-row justify-between items-center">
         <div className="max-w-xl mb-6 md:mb-0">
-          <h3 className="text-2xl font-semibold mb-2">Download the Paytm App</h3>
-          <p className="text-gray-600 mb-4">Get the best experience and access all services on the go.</p>
           <div className="flex space-x-4">
-            <Image src="/google-play.png" alt="Google Play" width={150} height={45} />
-            <Image src="/app-store.png" alt="App Store" width={150} height={45} />
+            <div>
+            <Image src="/left-right-arrows_10118069.png" alt="Transaction" width={80} height={80} />
+           
+            </div>
+            <div className="text-lg font-lg mt-4">Making Secure</div>
           </div>
+         
         </div>
-        <Image src="/download-app.png" alt="App Promo" width={300} height={300} />
+        <div className="w-full max-w-md p-4 text-center">
+  <h2 className="text-xl font-semibold mb-2">Secure Payments</h2>
+  <p className="text-gray-700">
+    Your transactions are protected with end-to-end encryption and industry-standard security protocols. We never store sensitive payment information, ensuring your data stays safe and private at all times.
+  </p>
+</div>
+
       </section>
     </div>
 

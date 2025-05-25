@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CheckSession from "../component/CheckSession";
 import { useForm } from "react-hook-form";
-import { AddMoney, getBalances, getTrx } from "../action";
+import { AddMoney, getBalances, getTrx } from "../api/lib/actions/action";
 import BalanceCard from "../component/balanceCard/balanceCard";
 
 

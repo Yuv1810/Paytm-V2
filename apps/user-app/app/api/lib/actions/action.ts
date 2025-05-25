@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth"
 import { revalidatePath } from "next/cache";
-import { authOptions } from "./api/lib/auth";
+import { authOptions } from "../auth";
 import { prisma } from "@repo/db";
 
 function generateToken(length = 20) {
@@ -83,7 +83,7 @@ export async function getBalances() {
     if(!session){
         revalidatePath("/");
     }
-    const userId=session?.user.id;
+    const userId:any=session?.user.id;
 
     try{
         const res= await prisma.balance.findUnique({
