@@ -31,7 +31,7 @@ jobs:
       - name: Build and push Docker image for ${{ matrix.app }}
         uses: docker/build-push-action@v5
         with:
-          context: Paytm_Clone  # root context
-          file: Paytm_Clone/docker/Dockerfile.${{ matrix.app }}
+          context: .                           # root of the repo in runner
+          file: docker/Dockerfile.${{ matrix.app }}  # Dockerfile path relative to root
           push: true
           tags: ysyuvraj/${{ matrix.app }}-app:latest
