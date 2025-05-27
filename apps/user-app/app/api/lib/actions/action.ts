@@ -14,6 +14,7 @@ export async function AddMoney(provider:string,amount:Number) {
     const session:any= await getServerSession(authOptions);
     if(!session){
         revalidatePath("/");
+        return;
     }
     const userId=session?.user.id;
     const token = generateToken();
@@ -46,6 +47,7 @@ export async function getTrx() {
 
     if(!session){
         revalidatePath("/");
+        return [];
     }
     const userId=session?.user.id;
 
@@ -82,10 +84,12 @@ export async function getBalances() {
 
     if(!session){
         revalidatePath("/");
+        return null;
     }
     const userId:any=session?.user.id;
 
     try{
+        if(!userId){return};
         const res= await prisma.balance.findUnique({
             where:{
                 userId

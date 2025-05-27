@@ -1,9 +1,13 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "CommonJS",
-      "types": ["node"],
-      "strict": true
-    }
-  }
-  
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ESNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "types": ["node"],
+    "strict": true
+  },
+  "include": ["src"]
+}

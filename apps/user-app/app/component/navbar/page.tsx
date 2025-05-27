@@ -39,28 +39,28 @@ export default function Navbar({ session }: { session: any }) {
   return (
     <nav className="bg-white shadow-md fixed w-screen ">
       <div className="max-w-7xl mx-auto px-4 py-3 h-16 flex justify-between items-center">
-      <div className="text-xl font-bold text-blue-600">
-    MyApp
+      <div className="text-xl font-bold text-[#002970]">
+    Paytm-V2 
 </div>
 
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-        <Link href="/" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+        <Link href="/" className="flex items-center text-gray-700 hover:text-[#002970] space-x-1">
         <Home size={18} />
         <span>Home</span>
       </Link>
 
-      <Link href="/transfer" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+      <Link href="/transfer" className="flex items-center text-gray-700 hover:text-[#002970] space-x-1">
         <Send size={18} />
         <span>Transfer</span>
       </Link>
 
-      <Link href="/transaction" className="flex items-center text-gray-700 hover:text-blue-600 space-x-1">
+      <Link href="/transaction" className="flex items-center text-gray-700 hover:text-[#002970] space-x-1">
         <List size={18} />
         <span>Transaction</span>
       </Link>
-      <Link href="/p2p" className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
+      <Link href="/p2p" className="flex items-center space-x-1 text-gray-700 hover:text-[#002970]">
       <Repeat size={18} />
       <span>P2P</span>
      </Link>
@@ -70,8 +70,8 @@ export default function Navbar({ session }: { session: any }) {
           ) : (
             // <Link href="/signin">
             <>
-            <button className="w-40 h-12 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in </button>
-             <button className="w-40 h-12 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
+            <button className="w-40 h-12 bg-[#002970] text-white px-2 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in </button>
+             <button className="w-40 h-12 bg-[#002970] text-white px-2 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
              </>
               
 
@@ -104,22 +104,22 @@ export default function Navbar({ session }: { session: any }) {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3 border-t border-gray-200">
-          <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+          <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-[#002970] py-2">
         <Home size={18} />
         <span>Home</span>
       </Link>
 
-      <Link href="/transfer" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+      <Link href="/transfer" className="flex items-center space-x-2 text-gray-700 hover:text-[#002970] py-2">
         <Send size={18} />
         <span>Transfer</span>
       </Link>
 
-      <Link href="/transaction" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+      <Link href="/transaction" className="flex items-center space-x-2 text-gray-700 hover:text-[#002970] py-2">
         <List size={18} />
         <span>Transaction</span>
       </Link>
 
-      <Link href="/p2p" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 py-2">
+      <Link href="/p2p" className="flex items-center space-x-2 text-gray-700 hover:text-[#002970] py-2">
         <Repeat size={18} />
         <span>Peer 2 Peer</span>
       </Link>
@@ -129,8 +129,8 @@ export default function Navbar({ session }: { session: any }) {
           ) : (
             // <Link href="/signin">
             <>
-              <button className="w-full bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in</button>
-              <button className="w-full bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
+              <button className="w-full bg-[#002970] mt-4 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => signIn()}>Sign in</button>
+              <button className="w-full bg-[#002970] my-4 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={()=> router.push('/signup')}>Sign up</button>
               </>
               
             // </Link>

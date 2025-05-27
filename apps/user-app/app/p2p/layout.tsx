@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Navbar from "../component/navbar/page";
 import { Session } from "inspector/promises";
 import { getSessionServer } from "../api/lib/auth";
+import Footer from "../component/Footer/footer";
 
 export default async function RootLayout({children}:{children:ReactNode}){
      const session = await getSessionServer();
@@ -10,6 +11,7 @@ export default async function RootLayout({children}:{children:ReactNode}){
         <Navbar session={session}/>
         <div className="pt-16">
         {children}
+        {/* <Footer/> */}
         
         </div>
         </>

@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import SessionWrapper from "./component/SessionWarpper";
+import { Toaster } from "react-hot-toast";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -19,7 +20,8 @@ export default function RootLayout({
 
     <SessionWrapper>
     <html lang="en" className={geist.className}>
-    <body style={{ background: "#ebe6e6" }} className="vsc-initialized">
+    <body style={{ background: "#eff6ff" }} className="vsc-initialized">
+    <Toaster position="top-right" />
           {children}
           </body>
          </html>

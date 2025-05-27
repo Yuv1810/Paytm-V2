@@ -1,7 +1,8 @@
 import express from 'express';
 const app = express();
 const PORT = 5500;
-import {prisma} from "@repo/db";
+const { prisma } = require('@repo/db');
+
 
 // Middleware to parse JSON
 

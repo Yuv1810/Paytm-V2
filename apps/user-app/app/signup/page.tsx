@@ -1,16 +1,14 @@
-
-
-
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState<number | string>("");
-  const [number, setnumber] = useState("");
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -23,138 +21,102 @@ const SignupPage = () => {
       return;
     }
 
-    setError(""); 
+    setError("");
 
     try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          name,
-          age,
-          number,
-          password,
-        }),
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, name, age, number, password }),
       });
-  
+
       if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.message || 'Signup failed');
+        toast.error("Signup failed. Try different email or phone number.");
+        return;
       }
-  
-      const data = await res.json();
-      console.log('Signup success:', data);
+
+      toast.success("Signup successful!");
+      router.push("/signin");
     } catch (err) {
-      console.error('Signup error:', err);
+      console.error("Signup error:", err);
+      toast.error("Something went wrong. Please try again.");
     }
-    // Just logging for now
-    console.log("Signup with", { email, name, age, number, password });
-
-
-
-
-
-    // After successful signup (you will replace with API call)
-    router.push("/");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <form
-        onSubmit={handleSignup}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
-      >
-        <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-[#f1f4f9] px-4">
+      <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl border border-gray-200">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-[#002970]">Create Account</h1>
+          <p className="text-sm text-gray-500">Sign up to get started</p>
+        </div>
 
-     
         {error && (
-          <div className="mb-4 text-red-600 font-semibold text-xs text-center">{error}</div>
+          <div className="text-red-600 text-sm text-center font-medium mb-4">
+            {error}
+          </div>
         )}
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
-            Email
-          </label>
+
+        <form onSubmit={handleSignup} className="space-y-4">
           <input
             type="email"
-            id="email"
+            placeholder="Email *"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your email"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium mb-1">
-            Name (optional)
-          </label>
           <input
             type="text"
-            id="name"
+            placeholder="Name (optional)"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your name"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <div className="mb-4">
-          <label htmlFor="age" className="block text-sm font-medium mb-1">
-            Age (optional)
-          </label>
           <input
             type="number"
-            id="age"
+            placeholder="Age (optional)"
             min={1}
             value={age}
             onChange={(e) => setAge(Number(e.target.value))}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your age"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-  
-        <div className="mb-4">
-          <label htmlFor="number" className="block text-sm font-medium mb-1">
-            Phone Number
-          </label>
           <input
             type="tel"
-            id="number"
+            placeholder="Phone Number *"
             required
             value={number}
-            onChange={(e) => setnumber(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your phone number"
+            onChange={(e) => setNumber(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium mb-1">
-            Password
-          </label>
           <input
             type="password"
-            id="password"
+            placeholder="Password *"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your password"
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <button
-          type="submit"
-          className="w-full h-12 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-        >
-          Sign Up
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="w-full py-3 bg-[#002970] text-white rounded-md font-semibold hover:bg-[#001f5c] transition"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <a href="/signin" className="text-blue-600 hover:underline">
+            Sign in
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

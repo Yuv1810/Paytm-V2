@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getP2P, P2Ptransfer } from "../api/lib/actions/p2p_action";
+import { getP2P_Received, getP2P_Sent, P2Ptransfer } from "../api/lib/actions/p2p_action";
 import { useSession } from "next-auth/react";
+import CheckSession from "../component/CheckSession";
 
 export default function P2P(){
 
@@ -12,13 +13,19 @@ export default function P2P(){
             number:"",
             amount:0,
         });
-        const [transactions,setTransaction]=useState<Array<any>>([]);
+        const [senttransactions,setSentTransaction]=useState<Array<any>>([]);
+        const [receivedtransactions,setReceivedTransaction]=useState<Array<any>>([]);
 
         const [error, setError] = useState("");
 
         async function fetchData() {
-            const res= await getP2P();
-            setTransaction(res);
+            const sentMoney= await getP2P_Sent();
+            setSentTransaction(sentMoney);
+
+            const receivedMoney= await getP2P_Received();
+            setReceivedTransaction(receivedMoney);
+
+
         }
 
         useEffect(()=>{
@@ -64,61 +71,134 @@ export default function P2P(){
 
     return(
         <>
-          <div className="w-full flex flex-col justify-between md:flex-row p-4 items-start">
-          <form onSubmit={onSubmit} className="w-full h-72 md:h-96 flex flex-col space-y-6 md:space-y-8 bg-white p-4 max-w-xl items-center rounded-md mt-10 md:mt-0 md:mr-4 shadow-lg border border-gray-600">
-    <h1 className="text-2xl font-bold mb-6 text-black">Add Money</h1>
-    {error && (
-          <div className="mb-4 text-red-600 font-semibold text-xs text-center">{error}</div>
-        )}
-    
-    <input type="number" placeholder="Amount" name="amount" onChange={handleChange} className="border p-2 md:mt-4 w-full rounded text-black"  />
-   
-    <input type="text" value={formData.number}  placeholder="Phone No" name="number" onChange={handleChange} className="border p-2 md:mt-4 w-full rounded text-black"/>
-
-    <button type="submit" className="w-full bg-blue-500 text-white px-4 md:mt-8 mt-2 py-2 rounded hover:bg-blue-600">
-      Submit
-    </button>
-  </form>
-
-  <div className="w-full flex flex-col md:flex-row-reverse pr-4 pl-4">
-                
-        <div className="w-full shadow-lg h-80 flex flex-col space-y-6 h-72 bg-white p-4 max-w-md items-center rounded-md my-10 overflow-y-auto border border-gray-600"> 
-        <h1 className="text-2xl font-bold mb-6 text-black">Peer to Peer Transactions</h1>
-
-        {transactions.length > 0 ? (
-  transactions.map((tx) => (
-    <div
-      key={tx.id}
-      className="w-full flex justify-between items-center text-black"
+       <CheckSession>
+  <div className="w-full flex flex-col md:flex-row justify-center items-start gap-6 p-4">
+  {/* <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl shadow-lg border h-96 overflow-y-auto flex flex-col space-y-6"> */}
+    {/* Add Money Form */}
+    <form
+      onSubmit={onSubmit}
+       className="w-full md:w-1/2 min-h-96 flex flex-col space-y-6 bg-white p-6 rounded-2xl shadow-md"
     >
-      <div className="flex flex-col">
-        <span className="font-semibold">
-          From: {tx.fromUser?.name || tx.fromUserId} → To: {tx.toUser?.name || tx.toUserId}
-        </span>
-        <span className="text-sm text-gray-600">
-          {new Date(tx.timestamp).toLocaleString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })}
-        </span>
-      </div>
-      <div className="text-right font-bold">₹{tx.amount}</div>
-    </div>
-  ))
-) : (
-  <div className="w-full text-center text-gray-500 py-4">
-    No Recent P2P Transactions
+      <h1 className="text-2xl font-bold text-[#002970]">Send Money</h1>
+
+      {error && (
+        <div className="text-red-600 font-medium text-sm text-center">{error}</div>
+      )}
+
+      <input
+        type="number"
+        placeholder="Amount"
+        name="amount"
+        onChange={handleChange}
+        className="border border-gray-300 p-2 rounded text-black w-full"
+      />
+
+      <input
+        type="text"
+        value={formData.number}
+        placeholder="Phone No"
+        name="number"
+        onChange={handleChange}
+        className="border border-gray-300 p-2 rounded text-black w-full"
+      />
+
+      <button
+        type="submit"
+        className="bg-[#00baf2] text-white py-3 rounded-md hover:bg-[#018ac3] transition mt-6"
+      >
+        Submit
+      </button>
+    </form>
+
+    {/* P2P Transactions */}
+    <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl shadow-md h-96 overflow-y-auto flex flex-col space-y-6">
+      <h1 className="text-2xl font-bold text-[#002970]">Peer to Peer Transactions</h1>
+
+      {senttransactions.length === 0 && receivedtransactions.length === 0 ? (
+  <div className="w-full text-center text-gray-500 text-sm">
+    No Recent Transactions
   </div>
+) : (
+  <>
+    {/* Sent Transactions */}
+    {senttransactions.length > 0 && (
+      <>
+        <h2 className="text-lg font-semibold text-[#002970] mt-6 mb-2">
+          Sent Transactions
+        </h2>
+        {senttransactions.map((tx) => (
+          <div
+            key={tx.id}
+            className="w-full flex justify-between items-start text-black bg-[#f8f9fb] rounded-md px-4 py-3"
+          >
+            <div className="flex flex-col text-sm">
+              <span className="font-semibold">
+                From: You → To:{" "}
+                {tx.toUser?.number || tx.toUserId}
+              </span>
+              <span className="text-xs text-gray-600">
+                {new Date(tx.timestamp).toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })}
+              </span>
+            </div>
+            <div className="text-right font-bold text-red-700 text-sm">
+              ₹{tx.amount}
+            </div>
+          </div>
+        ))}
+      </>
+    )}
+
+    {/* Received Transactions */}
+    {receivedtransactions.length > 0 && (
+      <>
+        <h2 className="text-lg font-semibold text-[#002970] mt-6 mb-2">
+          Received Transactions
+        </h2>
+        {receivedtransactions.map((tx) => (
+          <div
+            key={tx.id}
+            className="w-full flex justify-between items-start text-black bg-[#f8f9fb] rounded-md px-4 py-3"
+          >
+            <div className="flex flex-col text-sm">
+              <span className="font-semibold">
+                From: {tx.fromUser?.number || tx.fromUserId} → To:{" "}
+                You
+              </span>
+              <span className="text-xs text-gray-600">
+                {new Date(tx.timestamp).toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })}
+              </span>
+            </div>
+            <div className="text-right font-bold text-green-700 text-sm">
+              ₹{tx.amount}
+            </div>
+          </div>
+        ))}
+      </>
+    )}
+  </>
 )}
 
-          </div>
-          </div>
-          </div>
-       
+
+
+
+    </div>
+  </div>
+</CheckSession>
+
         </>
     )
 }

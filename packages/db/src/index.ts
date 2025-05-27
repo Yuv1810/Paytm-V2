@@ -1,2 +1,7 @@
-export {prisma} from "./client";
-export * from "./../generated/client"
+const { prisma } = require('./client');
+const generated = require('./../generated/client');
+
+module.exports = {
+  prisma,
+  ...generated
+};

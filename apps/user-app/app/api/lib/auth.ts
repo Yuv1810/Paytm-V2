@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma, Prisma } from "@repo/db";
+import { prisma} from "@repo/db";
 import bcrypt from "bcryptjs";
 
 // Define your auth options
@@ -16,22 +16,44 @@ export const authOptions: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        phone_No: { label: "Phone No", type: "Number", placeholder: "Phone No"  ,pattern: "^[0-9]{10}$"},
-        password: { label: "Password", type: "password" }
+        phone_No: { label: "Phone No", type: "text", placeholder: "Enter 10-digit phone number", pattern: "^[0-9]{10}$" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials:any, req) {
-
+      async authorize(credentials, req) {
+        console.log("------------------------");
         console.log(credentials);
 
+        if (!credentials?.phone_No || !credentials?.password) {
+          console.log("Missing phone_No or password");
+          return null;
+        }
         
+
+        const user : any= await prisma.user.findUnique({
+          where:{
+            number: credentials.phone_No
+          }
+        });
+
+        console.log(user);
+
           try {
           const user : any= await prisma.user.findUnique({
             where:{
-              number:credentials?.phone_No
+              number: credentials.phone_No
             }
           });
+          console.log("DB USER");
+          console.log(user);
+
+          if (!user) {
+            console.log("User not Found");
+            throw new Error("User not found");
+          }
 
           const passcheck= await bcrypt.compare(credentials?.password, user?.password);
+
+          console.log("passcheck",passcheck);
 
           if(passcheck){
             return user;
@@ -53,6 +75,9 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/signin", // 👈 Define your custom sign-in page path here
+  },
   session: {
     strategy: "jwt", // required for Credentials provider
   },

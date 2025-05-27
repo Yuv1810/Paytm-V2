@@ -3,12 +3,13 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import { revalidatePath } from "next/cache";
-import { prisma, User } from "@repo/db";
+import { prisma} from "@repo/db";
 
 export async function P2Ptransfer(number:string,amount:number) {
     const session :any= await getServerSession(authOptions);
         if(!session){
             revalidatePath("/");
+            return [];
         }
     const fromUserId=session?.user?.id;
     
@@ -21,7 +22,7 @@ export async function P2Ptransfer(number:string,amount:number) {
         return "Invalid Phone Number";
     }
 
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx:any) => {
         await tx.$executeRawUnsafe(`
           SELECT * FROM "Balance" WHERE "userId" = ${fromUserId} FOR UPDATE
         `);
@@ -49,10 +50,11 @@ export async function P2Ptransfer(number:string,amount:number) {
 
 
 
-export async function getP2P() {
+export async function getP2P_Sent() {
     const session :any= await getServerSession(authOptions);
     if(!session){
         revalidatePath("/");
+        return [];
     }
     const fromUserId=session?.user?.id;
 
@@ -67,26 +69,18 @@ export async function getP2P() {
          where:{
              fromUserId
          },
+         include: {
+          toUser: true, 
+        },
          skip:0,
          take:2
      });
  
-     const received= await prisma.p2pTransfer.findMany({
-         orderBy: [
-             {
-               timestamp: 'desc',
-             },
-            
-           ],
-         where:{
-             toUserId:fromUserId
-         },
-         skip:0,
-         take:2
-     });
+     console.log ("Sent Money",send);
+
+    
  
- 
-     return send.concat(received);
+     return send;
  
    } catch (error) {
 
@@ -96,6 +90,167 @@ export async function getP2P() {
    }
 
    return [];
+
+
+}
+
+
+
+
+
+export async function getP2P_Received() {
+  const session :any= await getServerSession(authOptions);
+  if(!session){
+      revalidatePath("/");
+      return [];
+  }
+  const fromUserId=session?.user?.id;
+
+ try {
+   
+   
+
+   const received= await prisma.p2pTransfer.findMany({
+       orderBy: [
+           {
+             timestamp: 'desc',
+           },
+          
+         ],
+       where:{
+           toUserId:fromUserId
+       },
+       include: {
+        fromUser: true, 
+      },
+       
+       skip:0,
+       take:2
+   });
+
+
+   return received;
+
+ } catch (error) {
+
+  console.log(`Getting the P2P error: `,error);
+  throw error;
+  
+ }
+
+ return [];
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function getP2P_SentAll() {
+  const session :any= await getServerSession(authOptions);
+  if(!session){
+      revalidatePath("/");
+      return [];
+  }
+  const fromUserId=session?.user?.id;
+
+ try {
+   const send= await prisma.p2pTransfer.findMany({
+       orderBy: [
+           {
+             timestamp: 'desc',
+           },
+          
+         ],
+       where:{
+           fromUserId
+       },
+       include: {
+        toUser: true, 
+      }
+   });
+
+   console.log ("Sent Money",send);
+
+  
+
+   return send;
+
+ } catch (error) {
+
+  console.log(`Getting the P2P error: `,error);
+  throw error;
+  
+ }
+
+ return [];
+
+
+}
+
+
+
+
+
+export async function getP2P_ReceivedAll() {
+const session :any= await getServerSession(authOptions);
+if(!session){
+    revalidatePath("/");
+    return [];
+}
+const fromUserId=session?.user?.id;
+
+try {
+ 
+ 
+
+ const received= await prisma.p2pTransfer.findMany({
+     orderBy: [
+         {
+           timestamp: 'desc',
+         },
+        
+       ],
+     where:{
+         toUserId:fromUserId
+     },
+     include: {
+      fromUser: true, 
+    }
+ });
+
+
+ return received;
+
+} catch (error) {
+
+console.log(`Getting the P2P error: `,error);
+throw error;
+
+}
+
+return [];
 
 
 }
