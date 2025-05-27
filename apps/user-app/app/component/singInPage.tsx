@@ -36,7 +36,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex items-center justify-center bg-[#f1f4f9] px-4">
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl border border-gray-200">
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-[#002970]">Welcome Back</h1>
+          <h1 className="text-3xl font-bold text-[#002970]">Welcome Back to Clone App</h1>
           <p className="text-sm text-gray-500">Login to continue to your account</p>
         </div>
 
