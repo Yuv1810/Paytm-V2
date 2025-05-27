@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { getTrx } from "../api/lib/actions/action";
 import { getP2P_ReceivedAll, getP2P_SentAll } from "../api/lib/actions/p2p_action";
+import CheckSession from "../component/CheckSession";
 
 export default function Transfer() {
   const [transactions, setTransaction] = useState<Array<any>>([]);
@@ -26,6 +27,8 @@ export default function Transfer() {
          },[]);
 
   return (
+    <>
+     <CheckSession>
     <div className="m-4 flex flex-col lg:flex-row justify-center space-y-6 lg:space-y-0 lg:space-x-6 max-w-screen">
       {/* Transactions Box */}
       <div className="lg:w-1/2 w-full h-96 flex flex-col space-y-6 bg-white p-4 items-center rounded-2xl shadow-md">
@@ -162,5 +165,7 @@ export default function Transfer() {
 
     </div>
     </div>
+    </CheckSession>
+    </>
   );
 }
