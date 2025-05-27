@@ -36,14 +36,25 @@ export async function P2Ptransfer(number:string,amount:number) {
           },
         });
       
-        await tx.balance.update({
-          where: { userId: toUser.id },
-          data: { amount: { increment: Number(amount) } },
+        const sender = await tx.balance.findUnique({
+          where: { userId: fromUserId },
+          select: { amount: true },
         });
       
+        if (!sender || sender.amount < Number(amount)) {
+          throw new Error("Insufficient balance");
+        }
+      
+        // Deduct from sender
         await tx.balance.update({
           where: { userId: fromUserId },
           data: { amount: { decrement: Number(amount) } },
+        });
+      
+        // Add to receiver
+        await tx.balance.update({
+          where: { userId: toUser.id },
+          data: { amount: { increment: Number(amount) } },
         });
       });
 }

@@ -38,9 +38,6 @@ export default async function Home() {
         <div className="max-w-xl">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">Recharge Wallet & Pay to Peer in Seconds</h2>
           <p className="text-gray-600 mb-6">Fast and secure.</p>
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700">
-            Get Started
-          </button>
         </div>
       </section>
 
