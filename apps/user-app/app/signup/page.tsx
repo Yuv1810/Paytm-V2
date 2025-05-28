@@ -77,7 +77,7 @@ const SignupPage = () => {
 
           <input
             type="number"
-            placeholder="Age (optional)"
+            placeholder="Age *"
             min={1}
             value={age}
             onChange={(e) => setAge(Number(e.target.value))}
